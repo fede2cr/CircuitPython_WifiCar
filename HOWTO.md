@@ -1,7 +1,7 @@
 # Guía de construcción y uso del WifiCar con CircuitPython
 
 ## Instrucciones
-1. Realizar conexión física
+### Realizar conexión física
 
 Se recomienda que el soldado de los stacking headers y terminales sea realizado previo al taller. De esta forma la única herramienta necesaria sería un desatornillador de punta phillips para ensamblaje del chasis.
 
@@ -14,9 +14,11 @@ La tarjeta debería verse de esta forma:
 
 ![Diagrama de Fritzing](https://github.com/fede2cr/CircuitPython_WifiCar/blob/master/doc/Diagrama%20conexiones%20-%20Wifi%20Car.png)
 
-2. Instalar CircuitPython en ESP8266: Se carga firmware según [instrucciones de Adafruit](https://learn.adafruit.com/micropython-basics-how-to-load-micropython-on-a-board/?view=all#esp8266), pero usando release de CircuitPython
+### Instalar CircuitPython en ESP8266
 
-```
+Se carga firmware según [instrucciones de Adafruit](https://learn.adafruit.com/micropython-basics-how-to-load-micropython-on-a-board/?view=all#esp8266), pero usando release de CircuitPython
+
+```bash
 esptool.py --port /dev/ttyUSB0 erase_flash
 esptool.py --port /dev/ttyUSB0 --baud 460800 write_flash --flash_size=detect 0 adafruit-circuitpython-feather_huzzah-0.8.4.bin
 ```
@@ -26,9 +28,11 @@ screen /dev/ttyUSB0 115200
 ```
 Puede salir de screen digitando ``CTRL+A`` y luego ``:quit``.
 
-3. Luego debe descargar los módulos de CircuitPython de [Featherwing de motor](https://github.com/adafruit/Adafruit_CircuitPython_PCA9685/releases), de [Register](https://github.com/adafruit/Adafruit_CircuitPython_Register/releases) y [Bus Device](https://github.com/adafruit/Adafruit_CircuitPython_BusDevice/releases):
+### Módulos de CircuitPython
 
-```
+Luego debe descargar los módulos de CircuitPython de [Featherwing de motor](https://github.com/adafruit/Adafruit_CircuitPython_PCA9685/releases), de [Register](https://github.com/adafruit/Adafruit_CircuitPython_Register/releases) y [Bus Device](https://github.com/adafruit/Adafruit_CircuitPython_BusDevice/releases). Luego utilice la herramienta de ``ampy`` para subir las **carpetas** de los módulos al flash de la ESP8266:
+
+```bash
 export AMPY_PORT=/dev/ttyUSB0
 unzip adafruit_pca9685.zip
 ampy put adafruit_pca9685
@@ -40,7 +44,7 @@ ampy ls
 ```
 Ahora puedes probar un pequeño "hola mundo" para comprobar que has subido los módulos de forma correcta, y que has conectado correctamente las baterías y motores. Para esto debes ejecutar de nuevo el comando de ``screen`` para entrar en el REPL de CircuitPython.
 **Nota: Si todo funciona correctamente, el carro se va a mover hacia adelante. Acomódelo de forma que no se caiga de la mesa de trabajo**
-```
+```python
 from board import *
 import bitbangio as io
 i2c = io.I2C(SCL, SDA)
@@ -51,13 +55,41 @@ motors.speed(3, 2000)
 ```
 *Nota: Es posible que el número del motor haya cambiado, por lo que puedes probar cambiando el motor a mover*
 Habiendo comenzado a moverse, el robot solo se va a detener hasta que se agoten las baterías. Para ello digitamos el siguiente comando por cada motor, para iniciar el frenado:
-```
+```python
 motors.brake(0)
 motors.brake(3)
 ```
 
-## Acceso por Wifi
+### Acceso por Wifi
 Esta es una parte que también puede ser preconfigurada en la tarjeta antes de entregar al estudiante, dependiendo de la naturaleza del laboratorio a realizar.
-Para tener control del IP que recibe la tarjeta, puede definirle un hostname y utilizar el módulo de MulticastDNS (mDNS) para publicar un nombre único por tarjeta.
+A como viene el firmware de CircuitPython de Adafruit, el ESP8266 se va a comportar como un Access Point wireless, por lo que queremos conectarlo a la red a utilizar durante el curso o taller. También es importante que se configure antes de pasar al sección de WebREPL.
+
+Es importante que la configuración de Wifi no debe ser guardada en ``boot.py`` dado que es almacenada de forma interna por CircuitPython. Para ello ejemutamos desde el REPL.
+
+```python
+import network
+wlan = network.WLAN(network.STA_IF)
+wlan.active(True)
+wlan.connect('nombre-AP-curso','clave-segura')
+```
+Luego de unos segundos estará conectado a la red, lo que puede comprobar ejecutando:
+```python
+wlan.ifconfig()
+```
+
+### WebREPL
+
+`>>>` ** `import webrepl_setup` **
+`WebREPL daemon auto-start status: disabled
+
+Would you like to (E)nable or (D)isable it running on boot?
+(Empty line to quit)
+>` **`e`**
+`To enable WebREPL, you must set password for it
+New password: ` **`greencore`**
+`Confirm password:` **`greencore`**
+`Changes will be activated after reboot
+Would you like to reboot now? (y/n)` **`y`**
 
 
+https://micropython.org/webrepl/
