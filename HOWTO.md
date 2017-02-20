@@ -14,7 +14,7 @@ La tarjeta debería verse de esta forma:
 
 ![Diagrama de Fritzing](https://github.com/fede2cr/CircuitPython_WifiCar/blob/master/doc/Diagrama%20conexiones%20-%20Wifi%20Car.png)
 
-2. Instalar CircuitPython en ESP8266: Se carga firmware según (instrucciones de Adafruit)[https://learn.adafruit.com/micropython-basics-how-to-load-micropython-on-a-board/?view=all#esp8266], pero usando release de CircuitPython
+2. Instalar CircuitPython en ESP8266: Se carga firmware según [instrucciones de Adafruit](https://learn.adafruit.com/micropython-basics-how-to-load-micropython-on-a-board/?view=all#esp8266), pero usando release de CircuitPython
 
 ```
 esptool.py --port /dev/ttyUSB0 erase_flash
@@ -26,7 +26,7 @@ screen /dev/ttyUSB0 115200
 ```
 Puede salir de screen digitando ``CTRL+A`` y luego ``:quit``.
 
-3. Luego debe descargar los módulos de CircuitPython de (Featherwing de motor)[https://github.com/adafruit/Adafruit_CircuitPython_PCA9685/releases], de (Register)[https://github.com/adafruit/Adafruit_CircuitPython_Register/releases] y [Bus Device)[https://github.com/adafruit/Adafruit_CircuitPython_BusDevice/releases]:
+3. Luego debe descargar los módulos de CircuitPython de [Featherwing de motor](https://github.com/adafruit/Adafruit_CircuitPython_PCA9685/releases), de [Register](https://github.com/adafruit/Adafruit_CircuitPython_Register/releases) y [Bus Device](https://github.com/adafruit/Adafruit_CircuitPython_BusDevice/releases):
 
 ```
 export AMPY_PORT=/dev/ttyUSB0
