@@ -42,7 +42,7 @@ unzip adafruit_bus_device.zip
 ampy put adafruit_bus_device
 ampy ls
 ```
-Ahora puedes probar un pequeño "hola mundo" para comprobar que has subido los módulos de forma correcta, y que has conectado correctamente las baterías y motores. Para esto debes ejecutar de nuevo el comando de ``screen`` para entrar en el REPL de CircuitPython.
+Ahora puedes probar un pequeño "hola mundo" para comprobar que has subido los módulos de forma correcta, y que has conectado correctamente las baterías y motores. Para esto debes ejecutar de nuevo el comando de `screen` para entrar en el REPL de CircuitPython.
 **Nota: Si todo funciona correctamente, el carro se va a mover hacia adelante. Acomódelo de forma que no se caiga de la mesa de trabajo**
 ```python
 from board import *
@@ -64,7 +64,7 @@ motors.brake(3)
 Esta es una parte que también puede ser preconfigurada en la tarjeta antes de entregar al estudiante, dependiendo de la naturaleza del laboratorio a realizar.
 A como viene el firmware de CircuitPython de Adafruit, el ESP8266 se va a comportar como un Access Point wireless, por lo que queremos conectarlo a la red a utilizar durante el curso o taller. También es importante que se configure antes de pasar al sección de WebREPL.
 
-Es importante que la configuración de Wifi no debe ser guardada en ``boot.py`` dado que es almacenada de forma interna por CircuitPython. Para ello ejemutamos desde el REPL.
+Es importante que la configuración de Wifi no debe ser guardada en `boot.py` dado que es almacenada de forma interna por CircuitPython. Para ello ejemutamos desde el REPL.
 
 ```python
 import network

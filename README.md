@@ -1,7 +1,7 @@
 # CircuitPython_WifiCar
 Carro controlado por medio de Wifi, basado en la micro ESP8266 con el lenguaje educativo CircuitPython, basado en Micropython
 
-Este documento describe las labores a realizar. Una vez que el proyecto tenga avance, el documento HOWTO.md reemplazará buena parte de este README.
+Este documento describe las labores a realizar. Una vez que el proyecto tenga avance, el documento [HOWTO.md](https://github.com/fede2cr/CircuitPython_WifiCar/blob/master/HOWTO.md) reemplazará buena parte de este README.
 
 ## Descripción
 Greencore Solutions ya tiene un curso de robótica para niños basado en micros Arduino, donde los estudiantes construyen su carro de dos motores el cual es manejado con un control remoto infrarojo, al cual queremos mejorar lo siguiente:
