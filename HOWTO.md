@@ -20,7 +20,7 @@ Se carga firmware según [instrucciones de Adafruit](https://learn.adafruit.com/
 
 ```bash
 esptool.py --port /dev/ttyUSB0 erase_flash
-esptool.py --port /dev/ttyUSB0 --baud 460800 write_flash --flash_size=detect 0 adafruit-circuitpython-feather_huzzah-0.8.4.bin
+esptool.py --port /dev/ttyUSB0 --baud 460800 write_flash --flash_size=detect 0 adafruit-circuitpython-feather_huzzah-0.9.0.bin
 ```
 Reiniciar el ESP8266, y comprobar que se puede acceder al REPL de CircuitPython, conectándose al puerto serial
 ```
@@ -35,10 +35,10 @@ Luego debe descargar los módulos de CircuitPython de [Featherwing de motor](htt
 ```bash
 export AMPY_PORT=/dev/ttyUSB0
 unzip adafruit_pca9685.zip
-ampy put adafruit_pca9685
 unzip adafruit_register.zip
-ampy put adafruit_register
 unzip adafruit_bus_device.zip
+ampy put adafruit_pca9685
+ampy put adafruit_register
 ampy put adafruit_bus_device
 ampy ls
 ```
@@ -111,7 +111,7 @@ ampy get boot.py
 En nuestro caso, vamos a usar el archivo como base, descomentando las líneas que deshabilitan *debugging*, el cual se encuentra habilitado porque CircuitPython se encuentra en un estado muy activo de desarrollo.
 Agregamos las líneas de iniciado de motor y librerías que vimos arriba, y subimos el archivo a nuestra ESP8266.
 ```bash
-ampy push boot.py
+ampy put boot.py
 ```
 
 Después de reiniciar nuestro ESP8266 ya podemos ejecutar comandos de motores:
@@ -144,3 +144,9 @@ Así mismo, se deben crear demostraciones de comportamiento, las cuales pueden s
 carro.demo(funnywalks)
 carro.demo(wifitaxa)
 ```
+
+## Referencias
+[Corriendo código y uso de Ampy](https://learn.adafruit.com/micropython-basics-load-files-and-run-code/?view=all)
+[Featherwing de motores](https://learn.adafruit.com/micropython-hardware-pca9685-dc-motor-and-stepper-driver/?view=all)
+[WebREPL](https://learn.adafruit.com/micropython-basics-esp8266-webrepl/?view=all)
+[TonyD's WebREPL Robot](https://www.youtube.com/watch?v=hOwReBsHq7g)
