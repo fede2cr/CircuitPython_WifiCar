@@ -145,7 +145,13 @@ Ahora puede conectarse al robot usando ya sea `screen` o WebREPL, y dentro ejecu
 ```python
 carro.adelante(segundos)
 carro.izquierda(segundos)
-carro.hola()
+carro.hola() # Un demo mínimalista
+```
+
+También se pueden crear geometrías sencillas definiendo la **cantidad de lados**, el **largo de las líneas en segundos**, y el **tiempo que debería durar girando para hacer el ángulo correcto**. Es importante calibrar el tiempo para el ángulo dado que va a cambiar según la superficie, tracción de las ruedas y carga/tipo de baterías para los motores:
+```python
+carro.geometria(3, 1, 0.9) # Un triángulo pequeño
+carro.geometria(4, 2, 0.7) # Un cuadrado
 ```
 
 Así mismo, se deben crear demostraciones de comportamiento, las cuales pueden ser cargadas como una clase de ejemplos:
