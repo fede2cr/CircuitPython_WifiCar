@@ -131,22 +131,31 @@ motors.brake(3)
 
 Hasta el momento tenemos un carro que podemos controlar vía Web sobre Wifi. Sin embargo los controles de dicho carro son un poco diferentes a las formas como conducimos algún tipo de carro eléctrico, ya sea de control remoto, un GoCart o un Tesla.
 
-Para ello se propone crear una pequeña clase de Python donde se pueda controlar se las siguientes formas. Se asume que el robot no tiene sensores como giroscopios o rotary encoder, por lo cual algunos movimientos deben ser calibrados y aproximados.
+Para ello se crea una pequeña clase de Python donde se pueda controlar de forma sencilla. Se asume que el robot no tiene sensores como giroscopios o rotary encoder, por lo cual algunos movimientos deben ser calibrados y aproximados.
+
+El cargado de esta clas ya se ejecuta automáticamente al inicio del robot por medio de `boot.py`.
+
+Para cargar la clase debe ejecutar en la terminal:
+```bash
+ampy put Robot.py
+ampy ls
+```
+Ahora puede conectarse al robot usando ya sea `screen` o WebREPL, y dentro ejecutar:
 
 ```python
 carro.adelante(segundos)
 carro.izquierda(segundos)
-carro.adelante(segundos,funnywalks)
+carro.hola()
 ```
 
 Así mismo, se deben crear demostraciones de comportamiento, las cuales pueden ser cargadas como una clase de ejemplos:
 ```python
-carro.demo(funnywalks)
-carro.demo(wifitaxa)
+carro.demo(funnywalks) # Como MonthyPython
+carro.demo(wifitaxa)   # Camina hacia el access point
 ```
 
 ## Referencias
-[Corriendo código y uso de Ampy](https://learn.adafruit.com/micropython-basics-load-files-and-run-code/?view=all)
-[Featherwing de motores](https://learn.adafruit.com/micropython-hardware-pca9685-dc-motor-and-stepper-driver/?view=all)
-[WebREPL](https://learn.adafruit.com/micropython-basics-esp8266-webrepl/?view=all)
-[TonyD's WebREPL Robot](https://www.youtube.com/watch?v=hOwReBsHq7g)
+- [Corriendo código y uso de Ampy](https://learn.adafruit.com/micropython-basics-load-files-and-run-code/?view=all)
+- [Featherwing de motores](https://learn.adafruit.com/micropython-hardware-pca9685-dc-motor-and-stepper-driver/?view=all)
+- [WebREPL](https://learn.adafruit.com/micropython-basics-esp8266-webrepl/?view=all)
+- [TonyD's WebREPL Robot](https://www.youtube.com/watch?v=hOwReBsHq7g)

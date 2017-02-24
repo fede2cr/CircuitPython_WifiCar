@@ -11,3 +11,8 @@ import bitbangio as io
 i2c = io.I2C(SCL, SDA)
 from adafruit_pca9685 import motor
 motors = motor.DCMotors(i2c)
+motors.brake(0)
+motors.brake(3)
+
+import Robot
+carro = Robot.Control(motors)
