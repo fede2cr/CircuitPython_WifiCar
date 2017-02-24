@@ -23,6 +23,8 @@ Cambiar a la plataforma de [Feather de Adafruit](https://www.adafruit.com/feathe
 - [x] Alistar componentes de hardware: Soldar stacing headers en Feather y Featherwing, remover placa anterior, alistar conectores de batería.
 - [x] Instalar última versión de CircuitPython en la ESP8266
 - [x] Ensamblar robot con nueva micro y realizar control básico de motores.
-- [ ] Usar como base WebREPL para crear una librería que permita control del robot por medio de una página web sencilla así como desde WebREPL. ¿Es posible que la ESP sea servidor de su propio REPL?
+- [x] Usar como base WebREPL para crear una librería que permita control del robot por medio de una página web servida por el mismo ESP8266.
 - [ ] Crear documentación visual de ensamblaje de robot.
 - [ ] Crear diversos laboratorios que el estudiante pueda seguir para sacarle un mejor provecho a su robot ensamblado y completo.
+- [ ] Crear traducciones de la documentación
+- [ ] Crear clases que permitan crear alias para comandos en otros idiomas (forward=adelante, etc)

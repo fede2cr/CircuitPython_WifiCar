@@ -100,6 +100,13 @@ Luego de este paso, la tarjeta debería reiniciar automáticamente y dejarnos co
 
 Para accesar el WebREPL debes bajar el [cliente desde esta dirección](https://github.com/micropython/webrepl/archive/master.zip), descomprimir, y abrir con Firefox o Chromium. Defines el IP que tiene actualmente el ESP8266, presionas *Conectar* y digitas la contraseña definida. Ya puedes digitar comandos en la microcontroladora desde el WebREPL, incluidos comandos para los motores y otros.
 
+Así mismo vamos a agregar código a `boot.py` para que pueda servir su propio repositorio de WebREPL para no necesitar un servidor adicional o conexión a Internet. El código de ello se basa en [replserver](https://github.com/ShrimpingIt/cockle/blob/master/replserver/)
+
+Para subir el WebREPL auto-servido, debemos agregar la página web minimizada y comprimida, ejecutando:
+```bash
+ampy put webrepl-inlined.html.gz
+```
+
 ### Autoconfiguración
 
 Para evitar que tengamos que digitar las operaciones que definen el motor, vamos a agregar estos comandos iniciales al archivo `boot.py` de forma que cuando inicie la micro, automáticamente va a configurar la tarjeta de motor shield, para que sea más sencillo y podamos digitar comandos de motores de forma directa.
@@ -124,7 +131,6 @@ Recuerde que el comando actual no ejecuta ningún frenado por lo que luego debe 
 ```python
 motors.brake(0)
 motors.brake(3)
-
 ```
 
 ### Clase de Python para manejo de carro
@@ -165,3 +171,4 @@ carro.demo(wifitaxa)   # Camina hacia el access point
 - [Featherwing de motores](https://learn.adafruit.com/micropython-hardware-pca9685-dc-motor-and-stepper-driver/?view=all)
 - [WebREPL](https://learn.adafruit.com/micropython-basics-esp8266-webrepl/?view=all)
 - [TonyD's WebREPL Robot](https://www.youtube.com/watch?v=hOwReBsHq7g)
+- [replserver](https://github.com/ShrimpingIt/cockle/blob/master/replserver/)
