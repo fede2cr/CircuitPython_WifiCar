@@ -28,3 +28,4 @@ Cambiar a la plataforma de [Feather de Adafruit](https://www.adafruit.com/feathe
 - [ ] Crear diversos laboratorios que el estudiante pueda seguir para sacarle un mejor provecho a su robot ensamblado y completo.
 - [ ] Crear traducciones de la documentación
 - [ ] Crear clases que permitan crear alias para comandos en otros idiomas (forward=adelante, etc)
+- [ ] Probar librería de selector de Wifi, para mejorar la portabilidad del proyecto
