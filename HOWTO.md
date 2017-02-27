@@ -162,7 +162,7 @@ carro.geometria(4, 2, 0.7) # Un cuadrado
 
 Así mismo, se deben crear demostraciones de comportamiento, las cuales pueden ser cargadas como una clase de ejemplos:
 ```python
-carro.demo(funnywalks) # Como MonthyPython
+carro.demo(sillywalks) # Como MonthyPython
 carro.demo(wifitaxa)   # Camina hacia el access point
 ```
 
