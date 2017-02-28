@@ -1,36 +1,37 @@
-# Guía de construcción y uso del WifiCar con CircuitPython
+# How to build and use of the WifiCard with CircuitPython
 
-## Instrucciones
-### Realizar conexión física
+## Instructions
+### Physical assembly
 
-Se recomienda que el soldado de los stacking headers y terminales sea realizado previo al taller. De esta forma la única herramienta necesaria sería un desatornillador de punta phillips para ensamblaje del chasis.
+It is recommented that you install stacking headers and terminals on the Feather and Featherwing previous to the class. If you prepare in advance you will only need a phillips screw driver to complete the assembly of the chasis.
 
-- Soldar stacking headers en el ESP8266 y el Featherwing para motor
-- Soldar terminales de tornillo en Featherwing para motor
-- Poner baterías en holder
-- Conectar holder de baterías a puerto de batería para motor, del Featherwing para motores
+- Solder stacking headers on the ESP8266 Feather Huzzah and the DC motor Featherwing.
+- Solder screw terminals for the DC motor Featherwing.
+- Add AA batteries to the battery holder.
+- Connect the battery holder cables to the screw terminal on the DC motor Featherwing
 
-La tarjeta debería verse de esta forma:
+The build should look like this at this step:
 
 ![Diagrama de Fritzing](https://github.com/fede2cr/CircuitPython_WifiCar/blob/master/doc/Diagrama%20conexiones%20-%20Wifi%20Car.png)
+(TODO: I'm missing the Lipo for the ESP in this diagram)
 
-### Instalar CircuitPython en ESP8266
+### Install CircuitPython on the ESP8266
 
-Se carga firmware según [instrucciones de Adafruit](https://learn.adafruit.com/micropython-basics-how-to-load-micropython-on-a-board/?view=all#esp8266), pero usando release de CircuitPython
+Load up the firmware following the streps on this [guide by Adafruit](https://learn.adafruit.com/micropython-basics-how-to-load-micropython-on-a-board/?view=all#esp8266), pero using a CircuitPython release.
 
 ```bash
 esptool.py --port /dev/ttyUSB0 erase_flash
 esptool.py --port /dev/ttyUSB0 --baud 460800 write_flash --flash_size=detect 0 adafruit-circuitpython-feather_huzzah-0.9.0.bin
 ```
-Reiniciar el ESP8266, y comprobar que se puede acceder al REPL de CircuitPython, conectándose al puerto serial
+Reboot the ESP8266, and doble check you can access the CircuitPython REPL, by connecting to the serial port:
 ```
 screen /dev/ttyUSB0 115200
 ```
-Puede salir de screen digitando ``CTRL+A`` y luego ``:quit``.
+You can exit `screen` by writing ``CTRL+A`` and then ``:quit``.
 
-### Módulos de CircuitPython
+### CircuitPython modules
 
-Luego debe descargar los módulos de CircuitPython de [Featherwing de motor](https://github.com/adafruit/Adafruit_CircuitPython_PCA9685/releases), de [Register](https://github.com/adafruit/Adafruit_CircuitPython_Register/releases) y [Bus Device](https://github.com/adafruit/Adafruit_CircuitPython_BusDevice/releases). Luego utilice la herramienta de ``ampy`` para subir las **carpetas** de los módulos al flash de la ESP8266:
+After downloading the CircuitPython modules for the [Featherwing de motor module](https://github.com/adafruit/Adafruit_CircuitPython_PCA9685/releases), the [Register module](https://github.com/adafruit/Adafruit_CircuitPython_Register/releases) and the [Bus Device module](https://github.com/adafruit/Adafruit_CircuitPython_BusDevice/releases). Then use the tool ``ampy`` to upload the **folders** of the modules to the flash of the ESP8266:
 
 ```bash
 export AMPY_PORT=/dev/ttyUSB0
@@ -42,8 +43,8 @@ ampy put adafruit_register
 ampy put adafruit_bus_device
 ampy ls
 ```
-Ahora puedes probar un pequeño "hola mundo" para comprobar que has subido los módulos de forma correcta, y que has conectado correctamente las baterías y motores. Para esto debes ejecutar de nuevo el comando de `screen` para entrar en el REPL de CircuitPython.
-**Nota: Si todo funciona correctamente, el carro se va a mover hacia adelante. Acomódelo de forma que no se caiga de la mesa de trabajo**
+Now you can test a small proof of concept to test that you have uploaded the modules properly, and that you have correctly plugged in the batteries and motors to the correct therminals. To do this you need to run the `screen` command again to get into the CircuitPython REPL.
+**Note: If everything works fine, the car should move forward. Please place it in a safe position to avoid it being dropped from a work table**
 ```python
 from board import *
 import bitbangio as io
