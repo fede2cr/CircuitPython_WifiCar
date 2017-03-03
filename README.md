@@ -57,6 +57,7 @@ motors.speed(3, 2000)
 ```
 *Nota: Es posible que el número del motor haya cambiado, por lo que puedes probar cambiando el motor a mover*
 Habiendo comenzado a moverse, el robot solo se va a detener hasta que se agoten las baterías. Para ello digitamos el siguiente comando por cada motor, para iniciar el frenado:
+
 ```python
 motors.brake(0)
 motors.brake(3)
@@ -66,7 +67,7 @@ motors.brake(3)
 Esta es una parte que también puede ser preconfigurada en la tarjeta antes de entregar al estudiante, dependiendo de la naturaleza del laboratorio a realizar.
 A como viene el firmware de CircuitPython de Adafruit, el ESP8266 se va a comportar como un Access Point wireless, por lo que queremos conectarlo a la red a utilizar durante el curso o taller. También es importante que se configure antes de pasar al sección de WebREPL.
 
-Es importante que la configuración de Wifi no debe ser guardada en `boot.py` dado que es almacenada de forma interna por CircuitPython. Para ello ejemutamos desde el REPL.
+Es importante que la configuración de Wifi no debe ser guardada en `boot.py` dado que es almacenada de forma interna por CircuitPython. Para ello ejecutamos desde el REPL.
 
 ```python
 import network
@@ -80,7 +81,9 @@ wlan.ifconfig()
 ```
 
 ### WebREPL
-El WebREPL ya casi se encuentra listo para ser usado. Primero debes importar el módulo de `webrepl_setup` el cual se encarga de habilitar WebREPL de forma permanente, así como definir una contraseña de acceso. *Nota: CircuitPython no tiene límite de conexiones por lo que es fácilmente atacable por fuerza bruta con listas de diccionario. Por ello, fuera de un ambiente académico se recomienda o utilizar una contraseña segura o deshabilitar WebREPL*.
+El WebREPL ya casi se encuentra listo para ser usado. Primero debes importar el módulo de `webrepl_setup` el cual se encarga de habilitar WebREPL de forma permanente, así como definir una contraseña de acceso.
+
+*Nota: CircuitPython no tiene límite de conexiones por lo que es fácilmente atacable por fuerza bruta con listas de diccionario. Por ello, fuera de un ambiente académico se recomienda o utilizar una contraseña segura o deshabilitar WebREPL*.
 
 
 ```python
@@ -100,7 +103,8 @@ Would you like to reboot now? (y/n) y
 
 Luego de este paso, la tarjeta debería reiniciar automáticamente y dejarnos con el WebREPL activado. Por [mientras](https://github.com/adafruit/circuitpython/issues/98) debes reiniciar la tarjeta manualmente presionando el botón de RESET ya sea en la ESP8266 o en el Featherwing de motores.
 
-Para accesar el WebREPL debes bajar el [cliente desde esta dirección](https://github.com/micropython/webrepl/archive/master.zip), descomprimir, y abrir con Firefox o Chromium. Defines el IP que tiene actualmente el ESP8266, presionas *Conectar* y digitas la contraseña definida. Ya puedes digitar comandos en la microcontroladora desde el WebREPL, incluidos comandos para los motores y otros.
+
+Para accesar el WebREPL normalmente deberíamos bajar un  [cliente desde esta dirección](https://github.com/micropython/webrepl/archive/master.zip), descomprimir, y abrir con Firefox o Chromium. Defines el IP que tiene actualmente el ESP8266, presionas *Conectar* y digitas la contraseña definida. Ya puedes digitar comandos en la microcontroladora desde el WebREPL, incluidos comandos para los motores y otros. En este proyecto sin embargo se ha incluído funcionalidad Web para que la página de WebREPL sea servida directamente desde la ESP8266.
 
 Así mismo vamos a agregar código a `boot.py` para que pueda servir su propio repositorio de WebREPL para no necesitar un servidor adicional o conexión a Internet. El código de ello se basa en [replserver](https://github.com/ShrimpingIt/cockle/blob/master/replserver/)
 

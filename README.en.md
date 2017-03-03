@@ -44,7 +44,9 @@ ampy put adafruit_bus_device
 ampy ls
 ```
 Now you can test a small proof of concept to test that you have uploaded the modules properly, and that you have correctly plugged in the batteries and motors to the correct therminals. To do this you need to run the `screen` command again to get into the CircuitPython REPL.
+
 **Note: If everything works fine, the car should move forward. Please place it in a safe position to avoid it being dropped from a work table**
+
 ```python
 from board import *
 import bitbangio as io
@@ -54,18 +56,20 @@ motors = motor.DCMotors(i2c)
 motors.speed(0, 2000)
 motors.speed(3, 2000)
 ```
-*Nota: Es posible que el número del motor haya cambiado, por lo que puedes probar cambiando el motor a mover*
-Habiendo comenzado a moverse, el robot solo se va a detener hasta que se agoten las baterías. Para ello digitamos el siguiente comando por cada motor, para iniciar el frenado:
+*Note: The motor number can change depending how where you connect the motors and how many do you have, so if a motor doesn't move try changing this values*
+
+Once the robot speed is set and starts moving, it will only stop moving when the batteries run out. To make it stop when you want use the following command, once for each motor:
 ```python
 motors.brake(0)
 motors.brake(3)
 ```
 
-### Acceso por Wifi
-Esta es una parte que también puede ser preconfigurada en la tarjeta antes de entregar al estudiante, dependiendo de la naturaleza del laboratorio a realizar.
-A como viene el firmware de CircuitPython de Adafruit, el ESP8266 se va a comportar como un Access Point wireless, por lo que queremos conectarlo a la red a utilizar durante el curso o taller. También es importante que se configure antes de pasar al sección de WebREPL.
+### Wifi
+This part can also be pre-configured before giving out the boards to the students, depending ono the nature of the class you are preparing.
 
-Es importante que la configuración de Wifi no debe ser guardada en `boot.py` dado que es almacenada de forma interna por CircuitPython. Para ello ejemutamos desde el REPL.
+With the CircuitPython firmware with the default settings from Adafruit, the ESP8266 will start running as an wireless access point, and we would like to connect it to our local wireless network during our class or workshop. It is also important to configure this before moving to the WebREPL section.
+
+It is imporant that the Wifi config does not have to be stored in the `boot.py` file, since it is stored internaly by CircuitPython. For this we run this commands inside the REPL.
 
 ```python
 import network
@@ -73,13 +77,15 @@ wlan = network.WLAN(network.STA_IF)
 wlan.active(True)
 wlan.connect('nombre-AP-curso','clave-segura')
 ```
-Luego de unos segundos estará conectado a la red, lo que puede comprobar ejecutando:
+After a few seconds you will be connected to the network, which you can verify by running:
 ```python
 wlan.ifconfig()
 ```
 
 ### WebREPL
-El WebREPL ya casi se encuentra listo para ser usado. Primero debes importar el módulo de `webrepl_setup` el cual se encarga de habilitar WebREPL de forma permanente, así como definir una contraseña de acceso. *Nota: CircuitPython no tiene límite de conexiones por lo que es fácilmente atacable por fuerza bruta con listas de diccionario. Por ello, fuera de un ambiente académico se recomienda o utilizar una contraseña segura o deshabilitar WebREPL*.
+The Web version of the REPL is almost ready to be used. First you must import the  `webrepl_setup` module, which handles enabling the WebREPL permanently, as well as defining an access  password.
+
+*Note: CircuitPython does not have a limit for the ammount of conextions which is why it should be easy to do a brute force dictionary attack to guestt the password. For this reason, outside an educational environment it is recommented to either to use a secure password, o disable WebREPL altogether.*
 
 
 ```python
@@ -97,79 +103,79 @@ Would you like to reboot now? (y/n) y
 
 ```
 
-Luego de este paso, la tarjeta debería reiniciar automáticamente y dejarnos con el WebREPL activado. Por [mientras](https://github.com/adafruit/circuitpython/issues/98) debes reiniciar la tarjeta manualmente presionando el botón de RESET ya sea en la ESP8266 o en el Featherwing de motores.
+After this step the board should reboot automatically and leave as enabled WebREPL. For  [now](https://github.com/adafruit/circuitpython/issues/98) you must reboot the board manually by pressing the RESET button on either the ESP8266 or in the Motor Featherwing.
 
-Para accesar el WebREPL debes bajar el [cliente desde esta dirección](https://github.com/micropython/webrepl/archive/master.zip), descomprimir, y abrir con Firefox o Chromium. Defines el IP que tiene actualmente el ESP8266, presionas *Conectar* y digitas la contraseña definida. Ya puedes digitar comandos en la microcontroladora desde el WebREPL, incluidos comandos para los motores y otros.
+Normally we should download [this client](https://github.com/micropython/webrepl/archive/master.zip), open up the zip, open with Firefox or Chromium. You then define the IP the ESP8266 is using, press *Connect* and write the predefined password. You can now write python commands on to the microcontroller vía WebREPL, including commands for moving the motors. However, in this project we have included web server funcionality so that the WebREPL web page is self hosted by the ESP8266.
 
-Así mismo vamos a agregar código a `boot.py` para que pueda servir su propio repositorio de WebREPL para no necesitar un servidor adicional o conexión a Internet. El código de ello se basa en [replserver](https://github.com/ShrimpingIt/cockle/blob/master/replserver/)
+We will add some code to `boot.py` to enable the web server and self-host it's own WebREPL without the need for an extra web server or an Internet conextion. The code is based on  [replserver](https://github.com/ShrimpingIt/cockle/blob/master/replserver/).
 
-Para subir el WebREPL auto-servido, debemos agregar la página web minimizada y comprimida, ejecutando:
+To upload the self served WebREPL, we must add this minimized and compressed web page by running:
 ```bash
 ampy put webrepl-inlined.html.gz
 ```
 
-### Autoconfiguración
+### Robot autoconfiguration
 
-Para evitar que tengamos que digitar las operaciones que definen el motor, vamos a agregar estos comandos iniciales al archivo `boot.py` de forma que cuando inicie la micro, automáticamente va a configurar la tarjeta de motor shield, para que sea más sencillo y podamos digitar comandos de motores de forma directa.
+In order to avoid writing the commands that define the motors each time we boot the board, we are adding this commands to the `boot.py` file. This way, everytime we start the board it will configura the motor Featherwing and the car will be ready for just writing the driving commands directly.
 
-Para ello es buena idea revisar si nuestro archivo `boot.py` posee algún código importante, sin embargo en nuestro caso como hemos comenzado desde cero, es posible omitir este paso. Para revisarlo puede ejecutar:
+To do this you first should look if you have some other code in your existing `boot.py` file that might be worth saving. In our case however, since we are starting from scratch, you can skip this step. To check it's content we run:
 ```bash
 ampy get boot.py
 ```
-En nuestro caso, vamos a usar el archivo como base, descomentando las líneas que deshabilitan *debugging*, el cual se encuentra habilitado porque CircuitPython se encuentra en un estado muy activo de desarrollo.
-Agregamos las líneas de iniciado de motor y librerías que vimos arriba, y subimos el archivo a nuestra ESP8266.
+For our robot we will use the file as a base, uncomment the lines that disable *debugging*, which is enabled dues to the early stage of development in which CircuitPython is at the time.
+We add the lines for configuring the motor Featherwing as well as the web server code for the self-hosted WebREPL and we upload them to our ESP8266 with:
 ```bash
 ampy put boot.py
 ```
 
-Después de reiniciar nuestro ESP8266 ya podemos ejecutar comandos de motores:
+After rebooting our ESP8266 we can now run run motors command directly on the board:
 ```python
 motors.speed(0, 2000)
 motors.speed(3, 2000)
 ```
-Recuerde que el comando actual no ejecuta ningún frenado por lo que luego debe ejecutar:
+Remember that this command will never brake so you have to by running:
 
 ```python
 motors.brake(0)
 motors.brake(3)
 ```
 
-### Clase de Python para manejo de carro
+### Python class for driving the car
 
-Hasta el momento tenemos un carro que podemos controlar vía Web sobre Wifi. Sin embargo los controles de dicho carro son un poco diferentes a las formas como conducimos algún tipo de carro eléctrico, ya sea de control remoto, un GoCart o un Tesla.
+Up to now we have a car that we can control via Web over Wifi. However the way we control this car is quite different from the way you would drive any other type of electric car like a GoCard or a Tesla.
 
-Para ello se crea una pequeña clase de Python donde se pueda controlar de forma sencilla. Se asume que el robot no tiene sensores como giroscopios o rotary encoder, por lo cual algunos movimientos deben ser calibrados y aproximados.
+So we would like to create a small Python class that will handle the driving commands in a simpler way. We will also asume that this version of the robot doesn't have any type of sensors like a gyroscope or rotary encoders, which is why we must calibrate and aproximate the motion of the robot.
 
-El cargado de esta clas ya se ejecuta automáticamente al inicio del robot por medio de `boot.py`.
+Loading this class is already being done automatically by the `boot.py` file.
 
-Para cargar la clase debe ejecutar en la terminal:
+To load the class to the robot you must run:
 ```bash
 ampy put Robot.py
 ampy ls
 ```
-Ahora puede conectarse al robot usando ya sea `screen` o WebREPL, y dentro ejecutar:
+Now you can connect to the robot using either `screen` or WebREPL and inside it run:
 
 ```python
-carro.adelante(segundos)
-carro.izquierda(segundos)
-carro.hola() # Un demo mínimalista
+carro.adelante(seconds)
+carro.izquierda(seconds)
+carro.hola() # A mini demo
 ```
 
-También se pueden crear geometrías sencillas definiendo la **cantidad de lados**, el **largo de las líneas en segundos**, y el **tiempo que debería durar girando para hacer el ángulo correcto**. Es importante calibrar el tiempo para el ángulo dado que va a cambiar según la superficie, tracción de las ruedas y carga/tipo de baterías para los motores:
+You can also create simple geomteries by defining the **ammount of sides**, the **lenght of the lines in seconds**, and the **time to rotate to create correct angle**. It is important to caligrate the angle which will change depending of the surface, traction of the tires, type and charge of the batteries for the motors:
 ```python
-carro.geometria(3, 1, 0.9) # Un triángulo pequeño
-carro.geometria(4, 2, 0.7) # Un cuadrado
+carro.geometria(3, 1, 0.9) # A small triangle
+carro.geometria(4, 2, 0.7) # Un square
 ```
 
-Así mismo, se deben crear demostraciones de comportamiento, las cuales pueden ser cargadas como una clase de ejemplos:
+You can also run some of the behaviour demos this way:
 ```python
-carro.demo(sillywalks) # Como MonthyPython
-carro.demo(wifitaxa)   # Camina hacia el access point
+carro.demo(sillywalks) # Like MonthyPython
+carro.demo(wifitaxa)   # Walks to find the access point
 ```
 
-## Referencias
-- [Corriendo código y uso de Ampy](https://learn.adafruit.com/micropython-basics-load-files-and-run-code/?view=all)
-- [Featherwing de motores](https://learn.adafruit.com/micropython-hardware-pca9685-dc-motor-and-stepper-driver/?view=all)
+## References
+- [Running code and Ampy use](https://learn.adafruit.com/micropython-basics-load-files-and-run-code/?view=all)
+- [Motor Featherwing](https://learn.adafruit.com/micropython-hardware-pca9685-dc-motor-and-stepper-driver/?view=all)
 - [WebREPL](https://learn.adafruit.com/micropython-basics-esp8266-webrepl/?view=all)
 - [TonyD's WebREPL Robot](https://www.youtube.com/watch?v=hOwReBsHq7g)
 - [replserver](https://github.com/ShrimpingIt/cockle/blob/master/replserver/)
