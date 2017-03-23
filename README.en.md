@@ -12,7 +12,7 @@ It is recommented that you install stacking headers and terminals on the Feather
 
 The build should look like this at this step:
 
-![Diagrama de Fritzing](https://github.com/fede2cr/CircuitPython_WifiCar/blob/master/doc/Diagrama%20conexiones%20-%20Wifi%20Car.png)
+![Fritzing Diagram](https://github.com/fede2cr/CircuitPython_WifiCar/blob/master/doc/Diagrama%20conexiones%20-%20Wifi%20Car.png)
 (TODO: I'm missing the Lipo for the ESP in this diagram)
 
 ### Install CircuitPython on the ESP8266
@@ -21,7 +21,7 @@ Load up the firmware following the streps on this [guide by Adafruit](https://le
 
 ```bash
 esptool.py --port /dev/ttyUSB0 erase_flash
-esptool.py --port /dev/ttyUSB0 --baud 460800 write_flash --flash_size=detect 0 adafruit-circuitpython-feather_huzzah-0.9.0.bin
+esptool.py --port /dev/ttyUSB0 --baud 460800 write_flash --flash_size=detect 0 adafruit-circuitpython-feather_huzzah-0.9.1.bin
 ```
 Reboot the ESP8266, and doble check you can access the CircuitPython REPL, by connecting to the serial port:
 ```
