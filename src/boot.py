@@ -4,6 +4,10 @@ esp.osdebug(None)
 import gc
 gc.collect()
 
+import network
+wlan = network.WLAN(network.STA_IF)
+wlan.active(True)
+
 from board import *
 import bitbangio as io
 i2c = io.I2C(SCL, SDA)
