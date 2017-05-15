@@ -3,7 +3,7 @@
 ## Instructions
 ### Physical assembly
 
-It is recommented that you install stacking headers and terminals on the Feather and Featherwing previous to the class. If you prepare in advance you will only need a phillips screw driver to complete the assembly of the chasis.
+It is recommented that you install stacking headers and terminals on the Feather and Featherwing previous to the class. If you prepare in advance you will only need a phillips screw driver to complete the assembly of the chassis.
 
 - Solder stacking headers on the ESP8266 Feather Huzzah and the DC motor Featherwing.
 - Solder screw terminals for the DC motor Featherwing.
@@ -43,7 +43,7 @@ ampy put adafruit_register
 ampy put adafruit_bus_device
 ampy ls
 ```
-Now you can test a small proof of concept to test that you have uploaded the modules properly, and that you have correctly plugged in the batteries and motors to the correct therminals. To do this you need to run the `screen` command again to get into the CircuitPython REPL.
+Now you can test a small proof of concept to test that you have uploaded the modules properly, and that you have correctly plugged in the batteries and motors to the correct terminals. To do this you need to run the `screen` command again to get into the CircuitPython REPL.
 
 **Note: If everything works fine, the car should move forward. Please place it in a safe position to avoid it being dropped from a work table**
 
@@ -65,11 +65,11 @@ motors.brake(3)
 ```
 
 ### Wifi
-This part can also be pre-configured before giving out the boards to the students, depending ono the nature of the class you are preparing.
+This part can also be pre-configured before giving out the boards to the students, depending on the nature of the class you are preparing.
 
 With the CircuitPython firmware with the default settings from Adafruit, the ESP8266 will start running as an wireless access point, and we would like to connect it to our local wireless network during our class or workshop. It is also important to configure this before moving to the WebREPL section.
 
-It is imporant that the Wifi config does not have to be stored in the `boot.py` file, since it is stored internaly by CircuitPython. For this we run this commands inside the REPL.
+It is important that the Wifi config does not have to be stored in the `boot.py` file, since it is stored internally by CircuitPython. For this we run this commands inside the REPL.
 
 ```python
 import network
@@ -85,7 +85,7 @@ wlan.ifconfig()
 ### WebREPL
 The Web version of the REPL is almost ready to be used. First you must import the  `webrepl_setup` module, which handles enabling the WebREPL permanently, as well as defining an access  password.
 
-*Note: CircuitPython does not have a limit for the ammount of conextions which is why it should be easy to do a brute force dictionary attack to guestt the password. For this reason, outside an educational environment it is recommented to either to use a secure password, o disable WebREPL altogether.*
+*Note: CircuitPython does not have a limit for the ammount of conextions which is why it should be easy to do a brute force dictionary attack to guest the password. For this reason, outside an educational environment it is recommended to either to use a secure password, o disable WebREPL altogether.*
 
 
 ```python
@@ -105,9 +105,9 @@ Would you like to reboot now? (y/n) y
 
 After this step the board should reboot automatically and leave as enabled WebREPL. For  [now](https://github.com/adafruit/circuitpython/issues/98) you must reboot the board manually by pressing the RESET button on either the ESP8266 or in the Motor Featherwing.
 
-Normally we should download [this client](https://github.com/micropython/webrepl/archive/master.zip), open up the zip, open with Firefox or Chromium. You then define the IP the ESP8266 is using, press *Connect* and write the predefined password. You can now write python commands on to the microcontroller vía WebREPL, including commands for moving the motors. However, in this project we have included web server funcionality so that the WebREPL web page is self hosted by the ESP8266.
+Normally we should download [this client](https://github.com/micropython/webrepl/archive/master.zip), open up the zip, open with Firefox or Chromium. You then define the IP the ESP8266 is using, press *Connect* and write the predefined password. You can now write python commands on to the microcontroller vía WebREPL, including commands for moving the motors. However, in this project we have included web server functionality so that the WebREPL web page is self hosted by the ESP8266.
 
-We will add some code to `boot.py` to enable the web server and self-host it's own WebREPL without the need for an extra web server or an Internet conextion. The code is based on  [replserver](https://github.com/ShrimpingIt/cockle/blob/master/replserver/).
+We will add some code to `boot.py` to enable the web server and self-host it's own WebREPL without the need for an extra web server or an Internet connection. The code is based on  [replserver](https://github.com/ShrimpingIt/cockle/blob/master/replserver/).
 
 To upload the self served WebREPL, we must add this minimized and compressed web page by running:
 ```bash
@@ -116,13 +116,13 @@ ampy put webrepl-inlined.html.gz
 
 ### Robot autoconfiguration
 
-In order to avoid writing the commands that define the motors each time we boot the board, we are adding this commands to the `boot.py` file. This way, everytime we start the board it will configura the motor Featherwing and the car will be ready for just writing the driving commands directly.
+In order to avoid writing the commands that define the motors each time we boot the board, we are adding this commands to the `boot.py` file. This way, everytime we start the board it will configure the motor Featherwing and the car will be ready for just writing the driving commands directly.
 
 To do this you first should look if you have some other code in your existing `boot.py` file that might be worth saving. In our case however, since we are starting from scratch, you can skip this step. To check it's content we run:
 ```bash
 ampy get boot.py
 ```
-For our robot we will use the file as a base, uncomment the lines that disable *debugging*, which is enabled dues to the early stage of development in which CircuitPython is at the time.
+For our robot we will use the file as a base, un-comment the lines that disable *debugging*, which is enabled dues to the early stage of development in which CircuitPython is at the time.
 We add the lines for configuring the motor Featherwing as well as the web server code for the self-hosted WebREPL and we upload them to our ESP8266 with:
 ```bash
 ampy put boot.py
@@ -144,7 +144,7 @@ motors.brake(3)
 
 Up to now we have a car that we can control via Web over Wifi. However the way we control this car is quite different from the way you would drive any other type of electric car like a GoCard or a Tesla.
 
-So we would like to create a small Python class that will handle the driving commands in a simpler way. We will also asume that this version of the robot doesn't have any type of sensors like a gyroscope or rotary encoders, which is why we must calibrate and aproximate the motion of the robot.
+So we would like to create a small Python class that will handle the driving commands in a simpler way. We will also assume that this version of the robot doesn't have any type of sensors like a gyroscope or rotary encoders, which is why we must calibrate and approximate the motion of the robot.
 
 Loading this class is already being done automatically by the `boot.py` file.
 
@@ -161,13 +161,13 @@ carro.izquierda(seconds)
 carro.hola() # A mini demo
 ```
 
-You can also create simple geomteries by defining the **ammount of sides**, the **lenght of the lines in seconds**, and the **time to rotate to create correct angle**. It is important to caligrate the angle which will change depending of the surface, traction of the tires, type and charge of the batteries for the motors:
+You can also create simple geomteries by defining the **amount of sides**, the **length of the lines in seconds**, and the **time to rotate to create correct angle**. It is important to calibrate the angle which will change depending of the surface, traction of the tires, type and charge of the batteries for the motors:
 ```python
 carro.geometria(3, 1, 0.9) # A small triangle
 carro.geometria(4, 2, 0.7) # Un square
 ```
 
-You can also run some of the behaviour demos this way:
+You can also run some of the behavior demos this way:
 ```python
 carro.demo(sillywalks) # Like MonthyPython
 carro.demo(wifitaxa)   # Walks to find the access point
