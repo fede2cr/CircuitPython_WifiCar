@@ -32,16 +32,12 @@ Puede salir de screen digitando ``CTRL+A`` y luego ``:quit``.
 
 ### Módulos de CircuitPython
 
-Luego debe descargar los módulos de CircuitPython de [Featherwing de motor](https://github.com/adafruit/Adafruit_CircuitPython_PCA9685/releases), de [Register](https://github.com/adafruit/Adafruit_CircuitPython_Register/releases) y [Bus Device](https://github.com/adafruit/Adafruit_CircuitPython_BusDevice/releases). Luego utilice la herramienta de ``ampy`` para subir las **carpetas** de los módulos al flash de la ESP8266:
+Luego debe descargar los módulos de CircuitPython de Featherwing de motor, de Register Bus Device; los cuales tanto para evitar una [pulga](https://github.com/adafruit/Adafruit_CircuitPython_PCA9685/issues/3) como para simplificar, vamos a utilizar el ["Bundle"](https://github.com/adafruit/Adafruit_CircuitPython_Bundle/releases). Luego utilice la herramienta de ``ampy`` para subir las **carpetas** de los módulos al flash de la ESP8266:
 
 ```bash
 export AMPY_PORT=/dev/ttyUSB0
-unzip adafruit_pca9685.zip
-unzip adafruit_register.zip
-unzip adafruit_bus_device.zip
-ampy put adafruit_pca9685
-ampy put adafruit_register
-ampy put adafruit_bus_device
+unzip adafruit-circuitpython-bundle-2.*.zip
+ampy put lib 
 ampy ls
 ```
 Ahora puedes probar un pequeño "hola mundo" para comprobar que has subido los módulos de forma correcta, y que has conectado correctamente las baterías y motores. Para esto debes ejecutar de nuevo el comando de `screen` para entrar en el REPL de CircuitPython.
