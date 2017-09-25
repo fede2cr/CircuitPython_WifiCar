@@ -31,16 +31,12 @@ You can exit `screen` by writing ``CTRL+A`` and then ``:quit``.
 
 ### CircuitPython modules
 
-After downloading the CircuitPython modules for the [Featherwing de motor module](https://github.com/adafruit/Adafruit_CircuitPython_PCA9685/releases), the [Register module](https://github.com/adafruit/Adafruit_CircuitPython_Register/releases) and the [Bus Device module](https://github.com/adafruit/Adafruit_CircuitPython_BusDevice/releases). Then use the tool ``ampy`` to upload the **folders** of the modules to the flash of the ESP8266:
+Instead downloading the CircuitPython modules for the Featherwing de motor module, the Register module and the Bus Device module, we will download the [CircuitPython Bundle](https://github.com/adafruit/Adafruit_CircuitPython_Bundle/releases) use the tool ``ampy`` to upload the ``lib`` **folder** that contains the modules, to the flash of the ESP8266:
 
 ```bash
 export AMPY_PORT=/dev/ttyUSB0
-unzip adafruit_pca9685.zip
-unzip adafruit_register.zip
-unzip adafruit_bus_device.zip
-ampy put adafruit_pca9685
-ampy put adafruit_register
-ampy put adafruit_bus_device
+unzip adafruit-circuitpython-bundle-2.*.zip
+ampy put lib 
 ampy ls
 ```
 Now you can test a small proof of concept to test that you have uploaded the modules properly, and that you have correctly plugged in the batteries and motors to the correct terminals. To do this you need to run the `screen` command again to get into the CircuitPython REPL.
