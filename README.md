@@ -22,7 +22,7 @@ Se carga firmware según [instrucciones de Adafruit](https://learn.adafruit.com/
 
 ```bash
 esptool.py --port /dev/ttyUSB0 erase_flash
-esptool.py --port /dev/ttyUSB0 --baud 460800 write_flash --flash_size=detect 0 adafruit-circuitpython-feather_huzzah-2.2.4.bin
+esptool.py --port /dev/ttyUSB0 --baud 460800 write_flash --flash_size=detect 0 adafruit-circuitpython-feather_huzzah-2.3.1.bin
 ```
 Reiniciar el ESP8266, y comprobar que se puede acceder al REPL de CircuitPython, conectándose al puerto serial
 ```
